@@ -1,98 +1,4 @@
-/**
- * This is the entry point to the program
- * Question 1 - Classifier
- *
- * @param {any} input Array of student objects
- */
- function classifier(input) {
-    if( input.length == 0){
-      return { noOfGroups: 0}
-    }
-  //add the age property to the students in the input array
-  let studentsWithAge = input.map( (student)=>{
-      let currentYear = 2019 //new Date(  Date.now()  ).getFullYear();
-      let studentYearOfBirth = new Date( student.dob ).getFullYear();
-  
-      let  studentAge = currentYear - studentYearOfBirth;
-      student.age = studentAge;
-      return student;
-  
-  });
-  
-  let sortedStudentsByAge = studWithAge.sort( (studentA, studentB)=> studentA.age - studentB.age);
-  console.log(sortedStudentsByAge)
-  let groupedStudent = sortedStudentsByAge.reduce( (groups, student)=>{
 
-      const latestGroup = groups[ groups.length - 1];
-        console.log(latestGroup)
-      if( latestGroup.length === 3){ //latestGroup is full
-  
-        const newGroup = []
-        newGroup.push( student);
-        console.log(newGroup)
-        groups.push( newGroup );
-        
-  
-        return groups;
-      }
-      //latestGroup is not full
-  
-      if( latestGroup.length > 0){
-        //latestGroup is not empty
-        const lastStudentInLatestGroup = latestGroup[ latestGroup.length - 1];
-        let studentCanEnterGroup = (student.age - lastStudentInLatestGroup.age ) <= 5
-        if( studentCanEnterGroup){
-          latestGroup.push(student);
-          console.log(latestGroup)
-        } else{
-              const newGroup = [];
-              newGroup.push(student)
-              console.log(newGroup)
-              groups.push(newGroup)
-        }
-  
-      }else{
-        //latestGroup empty
-        latestGroup.push(student)
-      }
-  
-  
-      console.log(groups)
-
-  
-      return groups;
-  }, [ []  ]);
-  
-  groupedStudent
-  const finalOutput = {};
-  //set the the number of groups
-  finalOutput.noOfGroups = groupedStudent.length;
-  for ( let index = 0; index < groupedStudent.length; index++){
-      let currentGroupMembers = groupedStudent[index];
-      let currentGroup = {}
-  
-      let members = currentGroupMembers;
-      console.log(currentGroupMembers)
-      
-      let oldest = currentGroupMembers[ currentGroupMembers.length -1 ].age;
-      let sum = currentGroupMembers.reduce( (acc, student)=> acc + student.age, 0)
-      let regNos = currentGroupMembers.map( student=> +student.regNo).sort( (a,b)=> a-b)
-  console.log(regNos)
-  
-      currentGroup.members = members;
-      currentGroup.oldest = oldest;
-      currentGroup.sum = sum;
-      currentGroup.regNos = regNos
-  
-      let groupName = `group${index+1}`;
-  
-      finalOutput[groupName] = currentGroup;
-  }
-  
-  console.log(finalOutput)
-  return finalOutput
-  
-  }
   
   
   
@@ -188,10 +94,102 @@
   // return person;
   // }).sort( (persona, personb)=> persona.age - personb.age))
   
-  classifier(input);
+  /**
+ * This is the entry point to the program
+ * Question 1 - Classifier
+ *
+ * @param {any} input Array of student objects
+ */
+ function classifier(input) {
+  if( input.length == 0){
+    return { noOfGroups: 0}
+  }
+//add the age property to the students in the input array
+let studsWithAge = input.map( (student)=>{
+    let currentYear = 2019 //new Date(  Date.now()  ).getFullYear();
+    let studentYearOfBirth = new Date( student.dob ).getFullYear();
+
+    let  studentAge = currentYear - studentYearOfBirth;
+    student.age = studentAge;
+    return student;
+
+});
+
+let sortedStudsByAge = studsWithAge.sort( (studentA, studentB)=> studentA.age - studentB.age);
+console.log(sortedStudsByAge)
+let groupedStudent = sortedStudsByAge.reduce( (groups, student)=>{
+
+    const newestGroup = groups[ groups.length - 1];
+      console.log(newestGroup)
+    if( newestGroup.length === 3){ //newestGroup is full
+
+      const newGroup = []
+      newGroup.push( student);
+      console.log(newGroup)
+      groups.push( newGroup );
+      
+
+      return groups;
+    }
+    //newestGroup is not full
+
+    if( newestGroup.length > 0){
+      //newestGroup is not empty
+      const lastStudentInnewestGroup = newestGroup[ newestGroup.length - 1];
+      let studentCanEnterGroup = (student.age - lastStudentInnewestGroup.age ) <= 5
+      if( studentCanEnterGroup){
+        newestGroup.push(student);
+        console.log(newestGroup)
+      } else{
+            const newGroup = [];
+            newGroup.push(student)
+            console.log(newGroup)
+            groups.push(newGroup)
+      }
+
+    }else{
+      //newestGroup empty
+      newestGroup.push(student)
+    }
+
+
+    console.log(groups)
+
+
+    return groups;
+}, [ []  ]);
+
+groupedStudent
+const finalOutput = {};
+//set the the number of groups
+finalOutput.noOfGroups = groupedStudent.length;
+for ( let index = 0; index < groupedStudent.length; index++){
+    let currentGroupMembers = groupedStudent[index];
+    let currentGroup = {}
+
+    let members = currentGroupMembers;
+    console.log(currentGroupMembers)
+    
+    let oldest = currentGroupMembers[ currentGroupMembers.length -1 ].age;
+    let sum = currentGroupMembers.reduce( (acc, student)=> acc + student.age, 0)
+    let regNos = currentGroupMembers.map( student=> +student.regNo).sort( (a,b)=> a-b)
+console.log(regNos)
+
+    currentGroup.members = members;
+    currentGroup.oldest = oldest;
+    currentGroup.sum = sum;
+    currentGroup.regNos = regNos
+
+    let groupName = `group${index+1}`;
+
+    finalOutput[groupName] = currentGroup;
+}
+
+//console.log(finalOutput)
+return finalOutput
+
+}
   
-  
-  
-  
+console.log(classifier(input));
   
   module.exports = classifier;
